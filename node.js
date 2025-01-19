@@ -1,6 +1,11 @@
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const express = require('express');
+
+// 配置 Express 服务器
+const app = express();
+const PORT = 3000; // 服务监听端口
 
 // 本地存储文件路径
 const FILE_PATH = path.join(__dirname, './data.json');
@@ -98,8 +103,30 @@ function mergeUniqueData(existingData, newData) {
   return [...existingData, ...uniqueNewData];
 }
 
+// 查询接口，根据 timestamp 返回大于 timestamp 的条目
+app.get('/query', (req, res) => {
+  const timestamp = parseInt(req.query.timestamp, 10);
+
+  if (isNaN(timestamp)) {
+    return res.status(400).json({ error: 'Invalid timestamp provided' });
+  }
+
+  // 读取本地数据
+  const localData = readLocalData();
+
+  // 筛选出符合条件的条目（timestamp > 查询值）
+  const result = localData.filter((item) => item.timestamp > timestamp);
+
+  return res.json(result);
+});
+
+// 启动服务
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
 // 每隔 5 分钟执行一次更新
-setInterval(updateData,  30 * 1000); // 5分钟
+setInterval(updateData, 30 * 1000); // 5分钟
 
 // 立即执行一次
 updateData();
