@@ -2,10 +2,14 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const cors = require('cors'); // 引入 CORS 中间件
 
 // 配置 Express 服务器
 const app = express();
 const PORT = 3000; // 服务监听端口
+
+// 启用 CORS
+app.use(cors());
 
 // 本地存储文件路径
 const FILE_PATH = path.join(__dirname, './data.json');
