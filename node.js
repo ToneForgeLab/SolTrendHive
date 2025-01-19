@@ -6,7 +6,7 @@ const cors = require('cors');
 
 // 配置 Express 服务器
 const app = express();
-const PORT = 3000; // 服务监听端口
+const PORT = 443; // 服务监听端口
 
 // 启用 CORS
 app.use(cors());
