@@ -37,6 +37,7 @@ function transformData(data) {
   return data.map((item) => {
     return {
       timestamp: toTimestampInSeconds(item['查询时间']),
+      time: item['查询时间'],
       color: item['颜色'],
       contract: item['合约'],
       coinName: item['币名'],
