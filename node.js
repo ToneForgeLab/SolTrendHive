@@ -101,7 +101,7 @@ async function updateData() {
 function mergeUniqueData(existingData, newData) {
   const existingTimestamps = new Set(existingData.map((item) => item.timestamp));
   const uniqueNewData = newData.filter((item) => !existingTimestamps.has(item.timestamp));
-  return [...existingData, ...uniqueNewData];
+  return [...existingData, ...uniqueNewData].sort((a, b) => a.timestamp - b.timestamp);
 }
 
 // 查询接口，根据 timestamp 返回大于 timestamp 的条目
